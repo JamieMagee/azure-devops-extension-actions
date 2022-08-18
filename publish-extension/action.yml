@@ -1,0 +1,20 @@
+name: 'Publish Extension'
+description: 'Publish an extension to the Visual Studio Marketplace'
+
+inputs:
+  token:
+    description: 'Azure DevOps token'
+    required: true
+  vsix:
+    description: 'Path to the VSIX file'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Publish extension'
+      id: 'publish-extension'
+      shell: pwsh
+      run: ./script.ps1 `
+        -Token ${{ inputs.token }} `
+        -Vsix ${{ inputs.vsix }}

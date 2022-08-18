@@ -1,0 +1,37 @@
+name: 'Package extension'
+description: 'Package an Azure DevOps extension into a VSIX file'
+
+inputs:
+  root-directory:
+    description: 'Root manifests directory'
+    required: false
+  manifest-patterns:
+    description: 'Manifest file(s)'
+    required: false
+  publisher-id:
+    description: 'Publisher ID of the extension'
+    required: false
+  extension-id:
+    description: 'Extension ID of the extension'
+    required: false
+  output-path:
+    description: 'Output path of the VSIX file'
+    required: false
+
+outputs:
+  output-path:
+    description: 'Output path'
+    value: ${{ steps.package-extension.outputs.output-path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Package extension'
+      id: 'package-extension'
+      shell: pwsh
+      run: ./script.ps1 `
+        -RootDirectory ${{ inputs.root-directory }} `
+        -ManifestPatterns ${{ inputs.manifest-patterns }} `
+        -PublisherId ${{ inputs.publisher-id }} `
+        -ExtensionId ${{ inputs.extension-id }} `
+        -OutputPath ${{ inputs.output-path }}

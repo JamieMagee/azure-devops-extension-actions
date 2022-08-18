@@ -1,0 +1,28 @@
+name: 'Share Extension'
+description: 'Share an extension with an Azure DevOps organisation'
+
+inputs:
+  token:
+    description: 'Azure DevOps token'
+    required: true
+  publisher-id:
+    description: 'Publisher ID of the extension'
+    required: true
+  extension-id:
+    description: 'Extension ID of the extension'
+    required: true
+  share-with:
+    description: 'Organisation(s) to share the extension with'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Share extension'
+      id: 'share-extension'
+      shell: pwsh
+      run: ./script.ps1 `
+        -Token ${{ inputs.token }} `
+        -PublisherId ${{ inputs.publisher-id }} `
+        -ExtensionId ${{ inputs.extension-id }} `
+        -ShareWith ${{ inputs.share-with }}`

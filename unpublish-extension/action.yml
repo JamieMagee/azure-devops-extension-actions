@@ -1,0 +1,24 @@
+name: 'Unpublish Extension'
+description: 'Unpublish an extension from the Visual Studio Marketplace'
+
+inputs:
+  token:
+    description: 'Azure DevOps token'
+    required: true
+  publisher-id:
+    description: 'Publisher ID of the extension'
+    required: true
+  extension-id:
+    description: 'Extension ID of the extension'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Unpublish extension'
+      id: 'unpublish-extension'
+      shell: pwsh
+      run: ./script.ps1 `
+        -Token ${{ inputs.token }} `
+        -PublisherId ${{ inputs.publisher-id }} `
+        -ExtensionId ${{ inputs.extension-id }}

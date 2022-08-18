@@ -1,0 +1,28 @@
+name: 'Install Extension'
+description: 'Install a published extension to an Azure DevOps organisation'
+
+inputs:
+  token:
+    description: 'Azure DevOps token'
+    required: true
+  publisher-id:
+    description: 'Publisher ID of the extension'
+    required: true
+  extension-id:
+    description: 'Extension ID of the extension'
+    required: true
+  service-url:
+    description: 'URL of the organization to install the extension to'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Install extension'
+      id: 'install-extension'
+      shell: pwsh
+      run: ./script.ps1 `
+        -Token ${{ inputs.token }} `
+        -PublisherId ${{ inputs.publisher-id }} `
+        -ExtensionId ${{ inputs.extension-id }} `
+        -ServiceUrl ${{ inputs.service-url }}
