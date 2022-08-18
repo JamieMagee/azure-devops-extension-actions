@@ -1,0 +1,14 @@
+name: 'Setup TFX CLI'
+
+inputs:
+  version:
+    description: The version of the TFX CL to install e.g. 0.12.0
+    required: false
+    default: 'latest'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Setup TFX CLI'
+      shell: pwsh
+      run: ./script.ps1 -Version ${{ inputs.version }}

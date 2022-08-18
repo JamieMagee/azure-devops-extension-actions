@@ -1,0 +1,18 @@
+name: 'Query Extension Version'
+
+inputs:
+  token:
+    required: true
+  publisherId:
+    description: 'The version of the TFX CL to install e.g. 0.12.0'
+    required: true
+  extensionId:
+    description: 'The version of the TFX CL to install e.g. 0.12.0'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Query extension version'
+      shell: pwsh
+      run: ./script.ps1 -PublisherId ${{ inputs.publisherId }} -ExtensionId ${{ inputs.extensionId }}
