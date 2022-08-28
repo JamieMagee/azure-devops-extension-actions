@@ -18,12 +18,22 @@ param (
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$res = tfx extension show `
-  --auth-type pat `
-  --token $Token `
-  --publisher $PublisherId `
-  --extension-id $ExtensionId `
-  --output json `
-  --no-color
+$arguments = @(
+  "extension", "show",
+  "--output", "json",
+  "--no-color",
+  "--auth-type", "pat",
+  "--token", "$Token",
+  "--publisher", "$PublisherId",
+  "--extension-id", "$ExtensionId"
+)
 
-Write-Host $res.ToString()
+$res = & tfx $arguments
+
+$version = $res `
+| ConvertFrom-Json `
+| Select-Object -ExpandProperty 'versions' `
+| Select-Object -First 1 `
+| Select-Object -ExpandProperty 'version'
+
+Write-Output "::set-output name=version::$version"

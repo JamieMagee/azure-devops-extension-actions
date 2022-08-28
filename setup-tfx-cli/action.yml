@@ -11,4 +11,5 @@ runs:
   steps:
     - name: 'Setup TFX CLI'
       shell: pwsh
-      run: ./script.ps1 -Version ${{ inputs.version }}
+      run: ./script.ps1 `
+        -Version ${{ inputs.version }}

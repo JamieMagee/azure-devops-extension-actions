@@ -1,18 +1,28 @@
 name: 'Query Extension Version'
+description: "Query an Azure DevOps extension's version"
 
 inputs:
   token:
     required: true
-  publisherId:
-    description: 'The version of the TFX CL to install e.g. 0.12.0'
+    description: 'Azure DevOps token'
+  publisher-id:
+    description: 'Publisher ID of the extension'
     required: true
-  extensionId:
-    description: 'The version of the TFX CL to install e.g. 0.12.0'
+  extension-id:
+    description: 'Extension ID of the extension'
     required: true
+
+outputs:
+  version:
+    value: ${{ steps.query-extension-version.outputs.version }}
 
 runs:
   using: 'composite'
   steps:
     - name: 'Query extension version'
+      id: 'query-extension-version'
       shell: pwsh
-      run: ./script.ps1 -PublisherId ${{ inputs.publisherId }} -ExtensionId ${{ inputs.extensionId }}
+      run: ./script.ps1 `
+        -Token ${{ inputs.token }} `
+        -PublisherId ${{ inputs.publisher-id }} `
+        -ExtensionId ${{ inputs.extension-id }}
